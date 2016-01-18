@@ -13,9 +13,9 @@ public class MobileAppAgent extends Agent {
     private City city;
     private CityMap map;
 
-    private Field target;
-    private Field targetParking;
-    private Set<Field> attemptedParkingFields = new HashSet<>();
+    private Position target;
+    private Position targetParking;
+    private Set<Position> attemptedParkingFields = new HashSet<>();
     private Path pathToTargetParking;
 
     @Override
@@ -23,10 +23,10 @@ public class MobileAppAgent extends Agent {
         System.out.println("Agent " + getName() + "started");
 
         initFromArguments();
-        target = map.getRandomField(FieldType.STREET);
-        findNewTargetParking();
+//        target = map.getRandomPosition(FieldType.STREET);
+//        findNewTargetParking();
 
-        startMoving();
+//        startMoving();
     }
 
     private void startMoving() {
@@ -50,9 +50,9 @@ public class MobileAppAgent extends Agent {
     }
 
     private void findNewTargetParking() {
-        targetParking = map.getNearestField(target, FieldType.PARKING, attemptedParkingFields);
-        Position myPosition = city.getAgentPosition(getName());
-        pathToTargetParking = map.getShortestPath(myPosition, targetParking.getPosition());
+        targetParking = map.getNearestPosition(target, FieldType.PARKING, attemptedParkingFields);
+        Position myPosition = city.getMobileAppAgentPosition(getName());
+        pathToTargetParking = map.getShortestPath(myPosition, targetParking);
     }
 
     private void initFromArguments() {

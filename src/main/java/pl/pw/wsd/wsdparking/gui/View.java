@@ -1,21 +1,21 @@
 package pl.pw.wsd.wsdparking.gui;
 
-import pl.pw.wsd.wsdparking.city.CityMap;
+import pl.pw.wsd.wsdparking.city.City;
 
 import javax.swing.*;
 
 public class View {
 
-    private final CityMap cityMap;
+    private final City city;
     private DrawingPanel drawingPanel;
 
-    public View(CityMap map) {
-        cityMap = map;
+    public View(City city) {
+        this.city = city;
     }
 
     public void show() {
         JFrame frame = new JFrame("WSD - Miejsca parkingowe");
-        drawingPanel = new DrawingPanel(cityMap);
+        drawingPanel = new DrawingPanel(city);
         frame.add(drawingPanel);
         frame.setSize(800, 600);
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

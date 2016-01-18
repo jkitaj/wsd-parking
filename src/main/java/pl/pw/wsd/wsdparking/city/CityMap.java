@@ -1,15 +1,18 @@
 package pl.pw.wsd.wsdparking.city;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 public class CityMap {
 
     private Map<Position, Field> fields = new HashMap<>();
     private int width;
     private int height;
+
+    public CityMap() {}
+
+    public CityMap(CityMap cityMap) {
+        // TODO: create copy
+    }
 
     public int getWidth() {
         return width;
@@ -22,7 +25,7 @@ public class CityMap {
     public void set(Position position, FieldType type) {
         width = Math.max(width, position.getX() + 1);
         height = Math.max(height, position.getY() + 1);
-        fields.put(position, new Field(type, position));
+        fields.put(position, new Field(type));
     }
 
     public Field get(Position position) {
@@ -30,11 +33,20 @@ public class CityMap {
                 .orElseThrow(() -> new RuntimeException("No field for position: " + position));
     }
 
-    public Field getRandomField(FieldType type) {
-        return null;
+    public Position getRandomPosition(FieldType type) {
+        Random random = new Random();
+        while(true) {
+            int x = random.nextInt(width);
+            int y = random.nextInt(height);
+            Position position = new Position(x, y);
+            Field field = fields.get(position);
+            if(field.getType().equals(type)) {
+                return position;
+            }
+        }
     }
 
-    public Field getNearestField(Field source, FieldType type, Set<Field> excludeFields) {
+    public Position getNearestPosition(Position source, FieldType type, Set<Position> excludePosition) {
         return null;
     }
 

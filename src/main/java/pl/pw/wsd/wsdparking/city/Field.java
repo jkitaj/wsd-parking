@@ -2,18 +2,16 @@ package pl.pw.wsd.wsdparking.city;
 
 public class Field {
     private final FieldType type;
-    private final Position position;    // needed?
 
-    public Field(FieldType type, Position position) {
+    // pola do wykorzystania przez agenty
+    private long timeStamp;     // aktualność informacji
+    private boolean occupied;   // czy zajęte (w przypadku parkingu)
+
+    public Field(FieldType type) {
         this.type = type;
-        this.position = position;
     }
 
     public FieldType getType() {
         return type;
-    }
-
-    public Position getPosition() {
-        return position;
     }
 }
