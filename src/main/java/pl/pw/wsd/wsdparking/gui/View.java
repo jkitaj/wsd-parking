@@ -14,7 +14,7 @@ public class View {
     }
 
     public void show() {
-        JFrame frame = new JFrame();
+        JFrame frame = new JFrame("WSD - Miejsca parkingowe");
         drawingPanel = new DrawingPanel(cityMap);
         frame.add(drawingPanel);
         frame.setSize(800, 600);
