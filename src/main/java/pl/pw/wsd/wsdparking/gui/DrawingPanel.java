@@ -64,8 +64,10 @@ public class DrawingPanel extends JPanel {
     private Color colorForField(FieldType type) {
         if(type.equals(FieldType.PARKING)) {
             return Color.YELLOW;
+        } else if(type.equals(FieldType.BUILDING)){
+            return Color.BLUE;
         } else {
-            return Color.WHITE;
+        	return Color.WHITE;
         }
     }
 }

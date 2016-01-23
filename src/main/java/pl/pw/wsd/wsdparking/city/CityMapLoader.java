@@ -14,6 +14,7 @@ public class CityMapLoader {
     static {
         fieldTypes.put('s', FieldType.STREET);
         fieldTypes.put('p', FieldType.PARKING);
+        fieldTypes.put('b', FieldType.BUILDING);
     }
 
     public CityMap loadFromFile(String filePath) {
