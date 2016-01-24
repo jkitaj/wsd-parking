@@ -27,7 +27,8 @@ public class DrawingPanel extends JPanel {
         CityMap cityMap = city.getMap();
         initializeDimensions(cityMap);
         drawMap(g, cityMap);
-        drawAgents(g, city.getMobileAppAgentsPositions());
+        drawMobileAppAgents(g, city.getMobileAppAgentsPositions());
+//        drawBeaconAgents(g, city.getBeaconAgentPositions());  // for debugging only
     }
 
     private void initializeDimensions(CityMap cityMap) {
@@ -36,7 +37,7 @@ public class DrawingPanel extends JPanel {
         leftRightMargin = (getWidth() - (cityMap.getWidth() * fieldSize)) / 2;
     }
 
-    private void drawAgents(Graphics2D g, Collection<Position> positions) {
+    private void drawMobileAppAgents(Graphics2D g, Collection<Position> positions) {
         for (Position position : positions) {
             g.setColor(Color.RED);
             int x = position.getX() * fieldSize + leftRightMargin;
@@ -44,6 +45,15 @@ public class DrawingPanel extends JPanel {
             g.fillRect(x, y, fieldSize, fieldSize);
             g.setColor(Color.BLACK);
             g.drawRect(x, y, fieldSize, fieldSize);
+        }
+    }
+
+    private void drawBeaconAgents(Graphics2D g, Collection<Position> positions) {
+        for (Position position : positions) {
+            g.setColor(Color.BLACK);
+            int x = position.getX() * fieldSize + leftRightMargin;
+            int y = position.getY() * fieldSize + topBottomMargin;
+            g.fillRect(x, y, fieldSize, fieldSize);
         }
     }
 
