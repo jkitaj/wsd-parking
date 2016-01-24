@@ -26,4 +26,9 @@ public class Path {
     public Position popNextPosition() {
         return null;
     }
+
+	@Override
+	public String toString() {
+		return "Path [positionOnPath=" + positionOnPath + "]";
+	}
 }

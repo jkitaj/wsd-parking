@@ -52,4 +52,9 @@ public class Vertex {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Vertex [x=" + x + ", y=" + y + "]";
+	}
+
 }
