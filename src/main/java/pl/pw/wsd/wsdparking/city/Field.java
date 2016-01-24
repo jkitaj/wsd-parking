@@ -11,7 +11,38 @@ public class Field {
         this.type = type;
     }
 
+    public Field(Field field) {
+        type = field.getType();
+        timeStamp = field.getTimeStamp();
+        occupied = field.isOccupied();
+    }
+
     public FieldType getType() {
         return type;
+    }
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public void setOccupied(boolean occupied) {
+        this.occupied = occupied;
+    }
+
+    public boolean isOccupied() {
+        return occupied;
+    }
+
+    @Override
+    public String toString() {
+        return "Field{" +
+                "type=" + type +
+                ", timeStamp=" + timeStamp +
+                ", occupied=" + occupied +
+                '}';
     }
 }
