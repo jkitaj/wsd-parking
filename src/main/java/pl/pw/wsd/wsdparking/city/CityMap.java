@@ -58,7 +58,6 @@ public class CityMap {
     }
 
     public Position getNearestPosition(Position source, FieldType type, Set<Position> excludePosition) {
-		System.out.println("source=" + source + ", type" + type + ", exclude " + excludePosition);
 		TreeMap<Double, Position> tMap = new TreeMap<>();
 		for (Position p : this.fields.keySet()) {
 			if (this.get(p).getType() == type && !excludePosition.contains(p)) {
@@ -74,7 +73,7 @@ public class CityMap {
     }
 
     public Path getShortestPath(Position from, Position to) {
-		System.out.println("Looking for path from '" + from + "' to '" + to + "' ...");
+		//System.out.println("Looking for path from '" + from + "' to '" + to + "' ...");
         Graph graph = prepareGraphFromMap(this);
         DijkstraAlgorithm alg = new DijkstraAlgorithm(graph);
         Vertex source = new Vertex(from.getX(), from.getY());
@@ -149,7 +148,6 @@ public class CityMap {
             Position p = new Position(v.getX(), v.getY());
             postList.add(p);
         }
-		System.out.println("Path to parking=" + new Path(postList));
         return new Path(postList);
     }
 

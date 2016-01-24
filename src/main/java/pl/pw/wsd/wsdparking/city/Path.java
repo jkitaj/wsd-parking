@@ -3,10 +3,10 @@ package pl.pw.wsd.wsdparking.city;
 import java.util.List;
 
 public class Path {
-	
+
 	private List<Position> positionOnPath;
-	
-    public Path(List<Position> positionOnPath) {
+
+	public Path(List<Position> positionOnPath) {
 		super();
 		this.positionOnPath = positionOnPath;
 	}
@@ -20,12 +20,17 @@ public class Path {
 	}
 
 	public boolean isEmpty() {
-        return false;
-    }
+		return false;
+	}
 
-    public Position popNextPosition() {
-        return null;
-    }
+	public Position popNextPosition() {
+		if (!positionOnPath.isEmpty()) {
+			Position first = positionOnPath.get(0);
+			positionOnPath.remove(0);
+			return first;
+		}
+		return null;
+	}
 
 	@Override
 	public String toString() {

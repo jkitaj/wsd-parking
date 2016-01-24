@@ -21,14 +21,14 @@ public class Main {
     public static void main(String[] args) {
         runMainContainer();
 
-        City city = new City(new CityMapLoader().loadFromFile("/map.txt"));
+        City city = new City(new CityMapLoader().loadFromFile("/map-big.txt"));
         AgentContainer agentContainer = getAgentContainer();
         startBeaconAgents(city, agentContainer);
         startMobileAppAgents(city, agentContainer);
 
         View view = new View(city);
         view.show();
-        // TODO: start refreshing view
+        view.redraw();
     }
 
     private static void startBeaconAgents(City city, AgentContainer agentContainer) {
