@@ -14,4 +14,10 @@ public class Field {
     public FieldType getType() {
         return type;
     }
+
+	@Override
+	public String toString() {
+		return "Field [type=" + type + ", timeStamp=" + timeStamp + ", occupied=" + occupied + "]";
+	}
+    
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -23,30 +24,27 @@ public class DijkstraAlgorithm {
 		this.edges = new ArrayList<Edge>(graph.getEdges());
 	}
 
-	public Set<Vertex> execute(Vertex source, Vertex target) {
-		settledNodes = new HashSet<Vertex>();
+	public void execute(Vertex source, Vertex target) {
+		settledNodes = new LinkedHashSet<Vertex>();
 		unSettledNodes = new HashSet<Vertex>();
 		distance = new HashMap<Vertex, Integer>();
 		predecessors = new HashMap<Vertex, Vertex>();
 		distance.put(source, 0);
 		unSettledNodes.add(source);
-		do{
+		while (unSettledNodes.size() > 0) {
 			Vertex node = getMinimum(unSettledNodes);
 			settledNodes.add(node);
 			unSettledNodes.remove(node);
-			if(node.equals(target))
-				break;
 			findMinimalDistances(node);
-		}while(true);
-			
-		return settledNodes;
+		}
 	}
 
 	private void findMinimalDistances(Vertex node) {
 		List<Vertex> adjacentNodes = getNeighbors(node);
 		for (Vertex target : adjacentNodes) {
-			if (getShortestDistance(target) > getShortestDistance(node) + getDistance(node, target)) {
-				distance.put(target, getShortestDistance(node) + getDistance(node, target));
+			int dist = getDistance(node, target);
+			if (getShortestDistance(target) > getShortestDistance(node) + dist) {
+				distance.put(target, getShortestDistance(node) + dist);
 				predecessors.put(target, node);
 				unSettledNodes.add(target);
 			}

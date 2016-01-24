@@ -69,4 +69,9 @@ public class Edge {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Edge [from=" + from + ", to=" + to + ", weight=" + weight + "]";
+	}
 }
