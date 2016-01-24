@@ -56,7 +56,9 @@ public class Main {
     private static void startMobileAppAgents(City city, AgentContainer container) {
         Params params = new Params(city, new CityMap(city.getMap()));
         String agentClassName = MobileAppAgent.class.getName();
-        for (int i = 0; i < 5; i++) {
+        int parkingFieldsCount = city.getMap().countFields(FieldType.PARKING);
+        int agentsCount = parkingFieldsCount * 2;   // TODO: 2? 3? ..?
+        for (int i = 0; i < agentsCount; i++) {
             String nickname = "Agent" + i;
             try {
                 AgentController controller = container.createNewAgent(nickname, agentClassName, new Object[]{ params });

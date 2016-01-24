@@ -225,4 +225,9 @@ public class CityMap {
             throw new IllegalArgumentException("Region goes out of map" + region);
         }
     }
+
+    public int countFields(FieldType type) {
+        return (int) fields.values().stream()
+                .filter(f -> type.equals(f.getType())).count();
+    }
 }

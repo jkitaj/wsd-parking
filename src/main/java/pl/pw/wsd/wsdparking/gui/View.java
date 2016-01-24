@@ -17,7 +17,7 @@ public class View {
         JFrame frame = new JFrame("WSD - Miejsca parkingowe");
         drawingPanel = new DrawingPanel(city);
         frame.add(drawingPanel);
-        frame.setSize(800, 600);
+        frame.setSize(900, 600);
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
     }
