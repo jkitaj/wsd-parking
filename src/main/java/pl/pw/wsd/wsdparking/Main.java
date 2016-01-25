@@ -22,7 +22,7 @@ public class Main {
     	SaveStats.clearStat();
         runMainContainer();
 
-        City city = new City(new CityMapLoader().loadFromFile(Constants.NAME_OF_FILE));
+        City city = new City(new CityMapLoader().loadFromFile(Constants.NAME_OF_MAP_RESOURCE_FILE));
         AgentContainer agentContainer = getAgentContainer();
         if(Constants.USE_INFO_FROM_BEACON)
         	startBeaconAgents(city, agentContainer);

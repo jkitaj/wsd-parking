@@ -5,7 +5,7 @@ public class Constants {
 	public final static boolean USE_INFO_FROM_BEACON = true;
 	public final static boolean USE_INFO_FROM_OTHER_AGENTS = true;
 
-	public final static String NAME_OF_FILE = "/map.txt";
+	public final static String NAME_OF_MAP_RESOURCE_FILE = "/map.txt";
 	public final static double NUMBER_OF_AGENTS_PARAMETER = 1.5;
 
 	// mobile app agents
@@ -23,7 +23,7 @@ public class Constants {
     public static final int BLUETOOTH_RANGE_IN_METERS = 20;
 	// theoretically up to 100m but see discussion: http://stackoverflow.com/questions/24586003/range-of-distances-in-which-wi-fi-direct-works
     public static final int WIFI_DIRECT_RANGE_IN_METERS = 60;
-    public final static String NAME_OF_FILE_WITH_STATS = "/stat.txt";
+    public final static String NAME_OF_FILE_WITH_STATS = "stat.txt";
 
     private Constants() {}
 }
