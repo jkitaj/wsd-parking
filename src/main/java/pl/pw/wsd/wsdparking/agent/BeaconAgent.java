@@ -35,7 +35,7 @@ public class BeaconAgent extends Agent {
     }
 
     private void startSendingBeaconInfo() {
-        addBehaviour(new TickerBehaviour(this, Constants.SEND_INFO_INTERVAL_MILLIS) {
+        addBehaviour(new TickerBehaviour(this, Constants.SEND_BEACON_INFO_INTERVAL_MILLIS) {
             @Override
             protected void onTick() {
                 BeaconInfo beaconInfo = prepareBeaconInfo();

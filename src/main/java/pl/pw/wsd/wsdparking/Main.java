@@ -59,7 +59,7 @@ public class Main {
         Params params = new Params(city, new CityMap(city.getMap()));
         String agentClassName = MobileAppAgent.class.getName();
         int parkingFieldsCount = city.getMap().countFields(FieldType.PARKING);
-        int agentsCount = (int) (parkingFieldsCount * Constants.NUMBER_OF_AGENT_PARAMETR);   
+        int agentsCount = (int) (parkingFieldsCount * Constants.NUMBER_OF_AGENTS_PARAMETER);
         for (int i = 0; i < agentsCount; i++) {
             String nickname = "Agent" + i;
             try {

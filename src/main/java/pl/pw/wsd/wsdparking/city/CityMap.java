@@ -14,6 +14,10 @@ public class CityMap {
     private int width;
     private int height;
 
+    public static boolean haveEqualDimensions(CityMap m1, CityMap m2) {
+        return m1.getWidth() == m2.getWidth() && m1.getHeight() == m2.getHeight();
+    }
+
     public CityMap() {
     }
 
@@ -40,7 +44,7 @@ public class CityMap {
     }
 
     public Field get(Position position) {
-        return Optional.of(fields.get(position))
+        return Optional.ofNullable(fields.get(position))
                 .orElseThrow(() -> new RuntimeException("No field for position: " + position));
     }
     

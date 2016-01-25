@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static pl.pw.wsd.wsdparking.Constants.BLUETOOTH_RANGE_IN_METERS;
-
 public class City {
 
 	private final CityMap map;
@@ -64,8 +62,20 @@ public class City {
 		if (beaconPosition == null) {
 			throw new IllegalArgumentException("No beacon for name: " + beaconName);
 		}
+		return mobileAppAgentsInRange(beaconPosition, Constants.BLUETOOTH_RANGE_IN_METERS);
+	}
+
+	public List<String> getMobileAppAgentsInWiFiDirectRange(String mobileAppAgentName) {
+		Position agentPosition = mobileAppAgents.get(mobileAppAgentName);
+		if (agentPosition == null) {
+			throw new IllegalArgumentException("No mobile app agent for name: " + mobileAppAgentName);
+		}
+		return mobileAppAgentsInRange(agentPosition, Constants.WIFI_DIRECT_RANGE_IN_METERS);
+	}
+
+	private List<String> mobileAppAgentsInRange(Position position, int rangeInMeters) {
 		return mobileAppAgents.entrySet().stream()
-				.filter(entry -> distanceInMeters(beaconPosition, entry.getValue()) <= BLUETOOTH_RANGE_IN_METERS)
+				.filter(entry -> distanceInMeters(position, entry.getValue()) <= rangeInMeters)
 				.map(Map.Entry::getKey).collect(Collectors.toList());
 	}
 

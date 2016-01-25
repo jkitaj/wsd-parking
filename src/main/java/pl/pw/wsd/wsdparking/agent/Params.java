@@ -6,8 +6,6 @@ import pl.pw.wsd.wsdparking.city.CityMap;
 public class Params {
     private City city;
     private CityMap map;
-    private boolean hasWiFiDirect;
-    private boolean hasInternet;
 
     public Params(City city, CityMap map) {
         this.city = city;
