@@ -11,6 +11,7 @@ import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
 import pl.pw.wsd.wsdparking.Constants;
+import pl.pw.wsd.wsdparking.SaveStats;
 import pl.pw.wsd.wsdparking.city.City;
 import pl.pw.wsd.wsdparking.city.CityMap;
 import pl.pw.wsd.wsdparking.city.Field;
@@ -56,7 +57,7 @@ public class MobileAppAgent extends Agent {
 			public void action() {
 				ACLMessage message = receive();
 				if (message != null) {
-					System.out.println(getName() + " received message: " + message);
+					//System.out.println(getName() + " received message: " + message);
 					processMessage(message);
 				} else {
 					block();
@@ -68,7 +69,7 @@ public class MobileAppAgent extends Agent {
 	private void processMessage(ACLMessage message) {
 		if (BeaconAgent.isBeaconMessage(message)) {
 			BeaconInfo info = BeaconAgent.extractBeaconInfo(message);
-			// System.out.println(getName() + " Received beacon info: " + info);
+			System.out.println(getName() + " Received beacon info: " + info);
 			updateCityMap(info);
 		}
 	}
@@ -156,7 +157,7 @@ public class MobileAppAgent extends Agent {
 		for (Integer i : stats) {
 			sum += i;
 		}
-		//System.out.println((double) sum / stats.size() / 1000);
-		 System.out.println("Average time to park of agent "+getName()+" was "+ (double)sum/stats.size()/1000 + " sec.");
+		SaveStats.saveToFile((((double) sum / stats.size() / 1000) + "").replace('.', ','));
+		System.out.println("Average time to park of agent "+getName()+" was "+ (double)sum/stats.size()/1000 + " sec.");
 	}
 }

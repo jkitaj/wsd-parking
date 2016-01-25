@@ -19,6 +19,7 @@ import java.util.List;
 public class Main {
 	
     public static void main(String[] args) {
+    	SaveStats.clearStat();
         runMainContainer();
 
         City city = new City(new CityMapLoader().loadFromFile(Constants.NAME_OF_FILE));
