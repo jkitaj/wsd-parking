@@ -8,7 +8,7 @@ import java.awt.event.WindowEvent;
 
 public class View {
 
-	private static final int REFRESH_INTERVAL_MILLIS = 200;
+	private static final int REFRESH_INTERVAL_MILLIS = 500;
 	
 	private final City city;
 	private DrawingPanel drawingPanel;

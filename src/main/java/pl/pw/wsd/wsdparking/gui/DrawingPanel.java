@@ -1,11 +1,9 @@
 package pl.pw.wsd.wsdparking.gui;
 
-import pl.pw.wsd.wsdparking.Constants;
 import pl.pw.wsd.wsdparking.city.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Arc2D;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -33,7 +31,6 @@ public class DrawingPanel extends JPanel {
 		drawMap(g, cityMap);
 		drawMobileAppAgents(g, city.getMobileAppAgents());
 //		drawBeaconAgents(g, city.getBeaconAgentPositions()); // for debugging only
-//		drawBeaconRanges(g, city.getBeaconAgentPositions());
 	}
 
 	private void initializeDimensions(CityMap cityMap) {
@@ -61,17 +58,6 @@ public class DrawingPanel extends JPanel {
 			int x = position.getX() * fieldSize + leftRightMargin;
 			int y = position.getY() * fieldSize + topBottomMargin;
 			g.fillRect(x, y, fieldSize, fieldSize);
-		}
-	}
-
-	private void drawBeaconRanges(Graphics2D g, Collection<Position> positions) {
-		for (Position position : positions) {
-			g.setColor(Color.GREEN);
-			int radius = fieldSize * Constants.BLUETOOTH_RANGE_IN_METERS / Constants.MAP_FIELD_SIZE_IN_METERS;
-			int diameter = 2 * radius;
-			int x = position.getX() * fieldSize + leftRightMargin + (fieldSize / 2);
-			int y = position.getY() * fieldSize + topBottomMargin + (fieldSize / 2);
-			g.draw(new Arc2D.Double(x - radius, y - radius, diameter, diameter, 0, 360, Arc2D.OPEN));
 		}
 	}
 
