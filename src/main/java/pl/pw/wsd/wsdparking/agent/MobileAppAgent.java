@@ -165,13 +165,16 @@ public class MobileAppAgent extends Agent {
 				return;
 			}
 			pathToTargetParking = map.getShortestPath(myPosition, targetParking);
+		} else {	// probably tried all parkings on map - start from beginning
+			attemptedParkingFields.clear();
+			findNewTargetParking();
 		}
 	}
 
 	private void initFromArguments() {
 		Object[] args = getArguments();
 		if (args != null && args.length > 0) {
-			Params params = (Params) args[0];
+			MobileAppAgentParams params = (MobileAppAgentParams) args[0];
 			city = params.getCity();
 			map = params.getMap();
 		}

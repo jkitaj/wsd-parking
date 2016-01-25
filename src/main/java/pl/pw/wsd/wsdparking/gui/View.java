@@ -8,7 +8,7 @@ import java.awt.event.WindowEvent;
 
 public class View {
 
-	private static final int REFRESH_INTERVAL_MILLIS = 500;
+	private static final int REFRESH_INTERVAL_MILLIS = 200;
 	
 	private final City city;
 	private DrawingPanel drawingPanel;
@@ -29,7 +29,7 @@ public class View {
 				}
 			});
 			timer.start();
-        });
+		});
 	}
 
 	private JFrame setupFrame() {

@@ -10,7 +10,7 @@ import jade.wrapper.ControllerException;
 import jade.wrapper.StaleProxyException;
 import pl.pw.wsd.wsdparking.agent.BeaconAgent;
 import pl.pw.wsd.wsdparking.agent.MobileAppAgent;
-import pl.pw.wsd.wsdparking.agent.Params;
+import pl.pw.wsd.wsdparking.agent.MobileAppAgentParams;
 import pl.pw.wsd.wsdparking.city.*;
 import pl.pw.wsd.wsdparking.gui.View;
 
@@ -34,7 +34,7 @@ public class Main {
 
     private static void startBeaconAgents(City city, AgentContainer agentContainer) {
         CityMap map = city.getMap();
-        List<Region> regions = map.divideIntoRegions(5);
+        List<Region> regions = map.divideIntoRegions(Constants.BEACON_REGION_SIZE);
         int cnt = 0;
         for (Region region : regions) {
             Position beaconPosition = region.center();
@@ -55,7 +55,7 @@ public class Main {
     }
 
     private static void startMobileAppAgents(City city, AgentContainer container) {
-        Params params = new Params(city, new CityMap(city.getMap()));
+        MobileAppAgentParams params = new MobileAppAgentParams(city, new CityMap(city.getMap()));
         String agentClassName = MobileAppAgent.class.getName();
         int parkingFieldsCount = city.getMap().countFields(FieldType.PARKING);
         int agentsCount = (int) (parkingFieldsCount * Constants.NUMBER_OF_AGENTS_PARAMETER);
