@@ -30,7 +30,6 @@ public class Main {
 
         View view = new View(city);
         view.show();
-        view.redraw();
     }
 
     private static void startBeaconAgents(City city, AgentContainer agentContainer) {
