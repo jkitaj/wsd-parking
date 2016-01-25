@@ -1,19 +1,25 @@
 package pl.pw.wsd.wsdparking.agent;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
-import pl.pw.wsd.wsdparking.city.*;
-
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import pl.pw.wsd.wsdparking.Constants;
+import pl.pw.wsd.wsdparking.city.City;
+import pl.pw.wsd.wsdparking.city.CityMap;
+import pl.pw.wsd.wsdparking.city.Field;
+import pl.pw.wsd.wsdparking.city.FieldType;
+import pl.pw.wsd.wsdparking.city.Path;
+import pl.pw.wsd.wsdparking.city.Position;
 
 public class MobileAppAgent extends Agent {
 
-	private static final long MOVE_AGENT_INTERVAL_MILLIS = 700;
-	private static final long STOP_ON_PARKING_INTERVAL_MILLIS = 5000;
 	private City city;
 	private CityMap map;
 
@@ -21,6 +27,8 @@ public class MobileAppAgent extends Agent {
 	private Position targetParking;
 	private Set<Position> attemptedParkingFields = new HashSet<>();
 	private Path pathToTargetParking;
+
+	private List<Integer> stats = new ArrayList<>();
 
 	// time start of looking free place to park
 	private Long timestamp;
@@ -48,8 +56,7 @@ public class MobileAppAgent extends Agent {
 			public void action() {
 				ACLMessage message = receive();
 				if (message != null) {
-					// System.out.println(getName() + " received message: " +
-					// message);
+					System.out.println(getName() + " received message: " + message);
 					processMessage(message);
 				} else {
 					block();
@@ -74,6 +81,7 @@ public class MobileAppAgent extends Agent {
 			if (field.getTimeStamp() < info.getTimeStamp()) {
 				field.setTimeStamp(info.getTimeStamp());
 				field.setOccupied(entry.getValue());
+				map.updateMap(entry.getKey(), field);
 			}
 		}
 	}
@@ -85,10 +93,14 @@ public class MobileAppAgent extends Agent {
 	}
 
 	private void startMoving() {
-		addBehaviour(new TickerBehaviour(this, MOVE_AGENT_INTERVAL_MILLIS) {
+		addBehaviour(new TickerBehaviour(this, Constants.MOVE_AGENT_INTERVAL_MILLIS) {
 			@Override
 			protected void onTick() {
 				if (pathToTargetParking != null && !pathToTargetParking.isEmpty()) {
+					if (Constants.USE_INFO_FROM_BEACON && map.get(targetParking).isOccupied()) {
+						attemptedParkingFields.add(targetParking);
+						findNewTargetParking();
+					}
 					boolean success = city.move(getName(), pathToTargetParking.popNextPosition());
 					if (pathToTargetParking.getPositionOnPath().isEmpty()) {
 						if (success) {
@@ -96,12 +108,13 @@ public class MobileAppAgent extends Agent {
 								long timeToFindParking = System.currentTimeMillis() - timestamp;
 								System.out.println("Time to find parking by agent " + getName() + " was "
 										+ timeToFindParking / 1000 + " sec.");
-								Thread.sleep(STOP_ON_PARKING_INTERVAL_MILLIS);
+								stats.add(new Long(timeToFindParking).intValue());
+								Thread.sleep(Constants.STOP_ON_PARKING_INTERVAL_MILLIS);
 							} catch (InterruptedException ex) {
 								Thread.currentThread().interrupt();
 							}
 							lookForNewTarget();
-						} else { // miejsce zajęte
+						} else { // miejsce zajete
 							attemptedParkingFields.add(targetParking);
 							findNewTargetParking();
 						}
@@ -115,9 +128,8 @@ public class MobileAppAgent extends Agent {
 		targetParking = map.getNearestPosition(target, FieldType.PARKING, attemptedParkingFields);
 		if (targetParking != null) {
 			Position myPosition = city.getMobileAppAgentPosition(getName());
-			if(targetParking.equals(myPosition))
-			{
-				//when nearest parking place is current place
+			if (targetParking.equals(myPosition)) {
+				// when nearest parking place is current place
 				return;
 			}
 			pathToTargetParking = map.getShortestPath(myPosition, targetParking);
@@ -136,5 +148,15 @@ public class MobileAppAgent extends Agent {
 	@Override
 	protected void takeDown() {
 		System.out.println("MobileAppAgent " + getName() + " finished");
+		calcAndShowStats();
+	}
+
+	private void calcAndShowStats() {
+		int sum = 0;
+		for (Integer i : stats) {
+			sum += i;
+		}
+		//System.out.println((double) sum / stats.size() / 1000);
+		 System.out.println("Average time to park of agent "+getName()+" was "+ (double)sum/stats.size()/1000 + " sec.");
 	}
 }

@@ -43,6 +43,10 @@ public class CityMap {
         return Optional.of(fields.get(position))
                 .orElseThrow(() -> new RuntimeException("No field for position: " + position));
     }
+    
+    public void updateMap(Position position, Field field){
+    	fields.put(position, field);
+    }
 
     public Position getRandomPosition(FieldType type) {
         Random random = new Random();

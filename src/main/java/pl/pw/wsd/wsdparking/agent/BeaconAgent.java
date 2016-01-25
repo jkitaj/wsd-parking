@@ -6,15 +6,13 @@ import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
+import pl.pw.wsd.wsdparking.Constants;
 import pl.pw.wsd.wsdparking.city.City;
 import pl.pw.wsd.wsdparking.city.Position;
 
 import java.util.List;
 
 public class BeaconAgent extends Agent {
-
-    private static final long SEND_INFO_INTERVAL_MILLIS = 250;
-    private static final String BEACON_ONTOLOGY = "beacon-messaging";
 
     public static class Params {
         private final List<Position> parkingPositions;
@@ -37,7 +35,7 @@ public class BeaconAgent extends Agent {
     }
 
     private void startSendingBeaconInfo() {
-        addBehaviour(new TickerBehaviour(this, SEND_INFO_INTERVAL_MILLIS) {
+        addBehaviour(new TickerBehaviour(this, Constants.SEND_INFO_INTERVAL_MILLIS) {
             @Override
             protected void onTick() {
                 BeaconInfo beaconInfo = prepareBeaconInfo();
@@ -49,7 +47,7 @@ public class BeaconAgent extends Agent {
 
     public static boolean isBeaconMessage(ACLMessage msg) {
         return ACLMessage.INFORM == msg.getPerformative()
-                && BEACON_ONTOLOGY.equals(msg.getOntology());
+                && Constants.BEACON_ONTOLOGY.equals(msg.getOntology());
     }
 
     public static BeaconInfo extractBeaconInfo(ACLMessage msg) {
@@ -61,7 +59,7 @@ public class BeaconAgent extends Agent {
         for (String name : receiverNames) {
             message.addReceiver(new AID(name, AID.ISGUID));
         }
-        message.setOntology(BEACON_ONTOLOGY);
+        message.setOntology(Constants.BEACON_ONTOLOGY);
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create();
         message.setContent(gson.toJson(beaconInfo));
         return message;

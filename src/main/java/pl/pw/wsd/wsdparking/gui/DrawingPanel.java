@@ -30,7 +30,7 @@ public class DrawingPanel extends JPanel {
 		initializeDimensions(cityMap);
 		drawMap(g, cityMap);
 		drawMobileAppAgents(g, city.getMobileAppAgents());
-		// drawBeaconAgents(g, city.getBeaconAgentPositions()); // for debugging
+		//drawBeaconAgents(g, city.getBeaconAgentPositions()); // for debugging
 		// only
 	}
 
@@ -47,8 +47,8 @@ public class DrawingPanel extends JPanel {
 			int y = pair.getValue().getY() * fieldSize + topBottomMargin;
 			g.fillRect(x, y, fieldSize, fieldSize);
 			g.setColor(Color.BLACK);
-			String shortName = pair.getKey().substring(0, pair.getKey().indexOf("@"));
-			g.drawString(shortName, pair.getValue().getX()* fieldSize + fieldSize/4 + leftRightMargin, pair.getValue().getY()* fieldSize + fieldSize/2 + topBottomMargin);
+			//String shortName = pair.getKey().substring(0, pair.getKey().indexOf("@"));
+			//g.drawString(shortName, pair.getValue().getX()* fieldSize + fieldSize/4 + leftRightMargin, pair.getValue().getY()* fieldSize + fieldSize/2 + topBottomMargin);
 			g.drawRect(x, y, fieldSize, fieldSize);
 		}
 	}

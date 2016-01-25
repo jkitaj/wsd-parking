@@ -17,13 +17,14 @@ import pl.pw.wsd.wsdparking.gui.View;
 import java.util.List;
 
 public class Main {
-
+	
     public static void main(String[] args) {
         runMainContainer();
 
-        City city = new City(new CityMapLoader().loadFromFile("/map-big.txt"));
+        City city = new City(new CityMapLoader().loadFromFile(Constants.NAME_OF_FILE));
         AgentContainer agentContainer = getAgentContainer();
-        startBeaconAgents(city, agentContainer);
+        if(Constants.USE_INFO_FROM_BEACON)
+        	startBeaconAgents(city, agentContainer);
         startMobileAppAgents(city, agentContainer);
 
         View view = new View(city);
@@ -57,7 +58,7 @@ public class Main {
         Params params = new Params(city, new CityMap(city.getMap()));
         String agentClassName = MobileAppAgent.class.getName();
         int parkingFieldsCount = city.getMap().countFields(FieldType.PARKING);
-        int agentsCount = parkingFieldsCount * 2;   // TODO: 2? 3? ..?
+        int agentsCount = (int) (parkingFieldsCount * Constants.NUMBER_OF_AGENT_PARAMETR);   
         for (int i = 0; i < agentsCount; i++) {
             String nickname = "Agent" + i;
             try {
