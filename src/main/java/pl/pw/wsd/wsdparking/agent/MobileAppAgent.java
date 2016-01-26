@@ -48,6 +48,7 @@ public class MobileAppAgent extends Agent {
 
 	private void lookForNewTarget() {
 		target = map.getRandomPosition(FieldType.BUILDING);
+		attemptedParkingFields.clear();
 		timestamp = System.currentTimeMillis();
 		findNewTargetParking();
 	}
@@ -88,6 +89,10 @@ public class MobileAppAgent extends Agent {
 				field.setTimeStamp(info.getTimeStamp());
 				field.setOccupied(entry.getValue());
 				map.updateMap(entry.getKey(), field);
+				if(entry.getValue() && !attemptedParkingFields.contains(entry.getKey()))
+					attemptedParkingFields.add(entry.getKey());
+				else if(!entry.getValue() && attemptedParkingFields.contains(entry.getKey()))
+					attemptedParkingFields.remove(entry.getKey());
 			}
 		}
 	}
@@ -104,6 +109,10 @@ public class MobileAppAgent extends Agent {
 						myField.setTimeStamp(otherField.getTimeStamp());
 						myField.setOccupied(otherField.isOccupied());
 						map.updateMap(position, myField);	// this is unnecessary but let's do this just in case :)
+						if(otherField.isOccupied() && !attemptedParkingFields.contains(position))
+							attemptedParkingFields.add(position);
+						else if(!otherField.isOccupied() && attemptedParkingFields.contains(position))
+							attemptedParkingFields.remove(position);
 					}
 				}
 			}
